@@ -1,16 +1,18 @@
 import express from 'express';
 
 import { appConfig } from './config';
-import { connect }  from './services/postgres';
+import postgres from './services/postgres';
+import rabbitmq from './services/rabbitmq';
 
 const appPort = appConfig.port;
 const server = express();
 
-const init = () => {
-    connect();
+const appInit = () => {
+    postgres();
+    rabbitmq();
 };
 
-server.listen(appPort,() => {
-    init();
+server.listen(appPort, () => {
+    appInit();
     console.log(`server is running on port ${appPort}`);
 })

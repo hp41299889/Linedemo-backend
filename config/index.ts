@@ -1,5 +1,4 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
+import 'dotenv/config';
 
 import { PostgresConfig } from './interface';
 
@@ -13,4 +12,12 @@ export const postgresConfig = {
     database: process.env.POSTGRES_DATABASE,
     host: process.env.POSTGRES_HOST,
     port: process.env.POSTGRES_PORT,
+};
+
+export const rabbitmqConfig = {
+    username: process.env.RABBITMQ_USERNAME,
+    password: process.env.RABBITMQ_PASSWORD,
+    host: process.env.RABBITMQ_HOST,
+    port: process.env.RABBITMQ_PORT,
+    queueName: process.env.RABBITMQ_QUEUENAME || "node"
 };
