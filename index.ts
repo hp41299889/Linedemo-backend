@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 
+import logger from './util/logger';
 import { appConfig } from './config';
-import postgres from './services/postgres';
-import { connect } from './services/rabbitmq';
+import * as services from './services/index';
 import * as routes from './routes/index';
 
 const appPort = appConfig.port;
@@ -15,8 +15,9 @@ server.use('/message', routes.message);
 server.use('/register', routes.register);
 
 const appInit = () => {
-    postgres();
-    // connect();
+    services.postgresInit();
+    services.consumerInit();
+    // services.producerInit();
 };
 
 server.listen(appPort, () => {

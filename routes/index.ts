@@ -1,5 +1,5 @@
-import register from './register';
-import message from './message';
+import register from './register/register';
+import message from './message/message';
 
 export {
     register,

@@ -1,12 +1,12 @@
 import { Router, Request, Response } from "express";
 
-import { sendMessage } from "../services/rabbitmq";
+import { publishMessage } from "../../services/rabbitmq/producer";
 
 const router = Router();
 
 router.post('/', (req: Request, res: Response) => {
     const { msg } = req.body;
-    sendMessage(msg);
+    publishMessage(msg);
     res.status(200).json('send success');
 });
 

@@ -14,10 +14,18 @@ export const postgresConfig = {
     port: process.env.POSTGRES_PORT,
 };
 
-export const rabbitmqConfig = {
-    username: process.env.RABBITMQ_USERNAME,
-    password: process.env.RABBITMQ_PASSWORD,
-    host: process.env.RABBITMQ_HOST,
-    port: process.env.RABBITMQ_PORT,
-    queueName: process.env.RABBITMQ_QUEUENAME || "node"
+export const rabbitmqProducerConfig = {
+    username: process.env.RABBITMQ_PRODUCER_USERNAME,
+    password: process.env.RABBITMQ_PRODUCER_PASSWORD,
+    host: process.env.RABBITMQ_PRODUCER_HOST,
+    port: process.env.RABBITMQ_PRODUCER_PORT,
+    queueName: process.env.RABBITMQ_PRODUCER_QUEUENAME || "node"
+};
+
+export const rabbitmqConsumerConfig = {
+    username: process.env.RABBITMQ_CONSUMER_USERNAME,
+    password: process.env.RABBITMQ_CONSUMER_PASSWORD,
+    host: process.env.RABBITMQ_CONSUMER_HOST,
+    port: process.env.RABBITMQ_CONSUMER_PORT,
+    queueName: process.env.RABBITMQ_CONSUMER_QUEUENAME || "node"
 };

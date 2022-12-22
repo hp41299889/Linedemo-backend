@@ -6,7 +6,7 @@ const { username, password, database, host, port } = postgresConfig;
 
 const postgres = new Sequelize(`postgres://${username}:${password}@${host}:${port}/${database}`);
 
-export default () => {
+export const postgresInit = () => {
     connect();
 };
 
