@@ -13,7 +13,7 @@ let channel: Channel;
 // };
 
 //TODO use Rxjs observable
-const connect = async (): Promise<void> => {
+export const connect = async (): Promise<void> => {
     await amqp.connect(uri)
         .then(async (connection: Connection) => {
             console.info('rabbitmq connect success');
@@ -41,10 +41,8 @@ const createChannel = async (connection: Connection): Promise<void> => {
     channel = chan;
 };
 
-const sendMessage = (message: string) => {
+export const sendMessage = (message: string) => {
     const msg = Buffer.from(message);
     channel.sendToQueue(queueName, msg);
     console.info(`send to ${queueName}, message:${msg}`)
 };
-
-export default connect;
