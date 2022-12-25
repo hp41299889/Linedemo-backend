@@ -1,7 +1,7 @@
-import register from './register/register';
 import message from './message/message';
+import user from './user/user';
 
 export {
-    register,
+    user,
     message
 };

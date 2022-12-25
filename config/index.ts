@@ -19,7 +19,7 @@ export const rabbitmqProducerConfig = {
     password: process.env.RABBITMQ_PRODUCER_PASSWORD,
     host: process.env.RABBITMQ_PRODUCER_HOST,
     port: process.env.RABBITMQ_PRODUCER_PORT,
-    queueName: process.env.RABBITMQ_PRODUCER_QUEUENAME || "node"
+    queueName: process.env.RABBITMQ_PRODUCER_QUEUENAME || 'node'
 };
 
 export const rabbitmqConsumerConfig = {
@@ -27,5 +27,5 @@ export const rabbitmqConsumerConfig = {
     password: process.env.RABBITMQ_CONSUMER_PASSWORD,
     host: process.env.RABBITMQ_CONSUMER_HOST,
     port: process.env.RABBITMQ_CONSUMER_PORT,
-    queueName: process.env.RABBITMQ_CONSUMER_QUEUENAME || "node"
+    queueName: process.env.RABBITMQ_CONSUMER_QUEUENAME || 'node'
 };

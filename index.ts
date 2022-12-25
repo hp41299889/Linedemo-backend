@@ -12,15 +12,16 @@ const server = express();
 server.use(express.json())
 server.use(cors());
 server.use('/message', routes.message);
-server.use('/register', routes.register);
+server.use('/', routes.user);
+// server.use('/register', routes.register);
 
 const appInit = () => {
-    services.postgresInit();
-    services.consumerInit();
-    // services.producerInit();
+  services.postgresInit();
+  // services.consumerInit();
+  // services.producerInit();
 };
 
 server.listen(appPort, () => {
-    appInit();
-    console.log(`server is running on port ${appPort}`);
-})
+  appInit();
+  logger.debug(`server is running on port ${appPort}`);
+});
