@@ -1,17 +1,22 @@
 import { Router } from 'express';
 
-import { createHandler, readAllHandler, readByIdHandler, updateByIdHandler, deleteByIdHandler } from '../../controllers/user/user';
-import logger from '../../util/logger';
+import {
+  postUser,
+  getUsers,
+  getUser,
+  patchUser,
+  deleteUser
+} from '../../controllers/user/user';
 
 const router = Router();
 
 router.route('/user')
-  .post(createHandler);
+  .post(postUser);
 router.route('/users')
-  .get(readAllHandler);
+  .get(getUsers);
 router.route('/user/:id')
-  .get(readByIdHandler)
-  .patch(updateByIdHandler)
-  .delete(deleteByIdHandler);
+  .get(getUser)
+  .patch(patchUser)
+  .delete(deleteUser);
 
 export default router;

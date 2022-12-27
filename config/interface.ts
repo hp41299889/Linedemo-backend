@@ -3,5 +3,5 @@ export interface PostgresConfig {
     password: string;
     database: string;
     host: string;
-    port: string;
+    port: string | number;
 };

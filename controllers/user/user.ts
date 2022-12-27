@@ -1,108 +1,71 @@
 import { Request, Response, NextFunction } from "express";
 
-import logger from "../../util/logger";
-import { create, readAll, readById, updateById, deleteById } from "../../models/user";
+import { loggerFactory } from "../../util/logger";
+import { success, fail } from '../../util/httpHandler';
 
+import {
+    createUser,
+    readAllUsers,
+    readUserById,
+    updateUserById,
+    deleteUserById
+} from "../../models/user";
 
+const logger = loggerFactory('UserController');
 //TODO more easily
 //TODO use Rxjs
 //TODO params
-export const createHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const postUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const result = await create(req.body);
-        res.status(201).json({
-            status: 'success',
-            data: {
-                result
-            }
-        });
+        logger.debug('Get http request, post an user');
+        const result = await createUser(req.body);
+        success(res, result);
     } catch (err) {
-        res.status(400).json({
-            status: 'fail',
-            data: {
-                err
-            }
-        });
+        fail(res, err);
         next(err);
     };
 };
 
-export const readAllHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const result = await readAll();
-        res.status(201).json({
-            status: 'success',
-            data: {
-                result
-            }
-        });
+        logger.debug('Get http request, get all users', { label: 'user' });
+        const result = await readAllUsers();
+        success(res, result);
     } catch (err) {
-        res.status(400).json({
-            status: 'fail',
-            data: {
-                err
-            }
-        });
+        fail(res, err);
         next(err);
     };
 };
 
-export const readByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const getUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const result = await readById(req.params.id);
-        res.status(201).json({
-            status: 'success',
-            data: {
-                result
-            }
-        });
+        logger.debug('Get http request, get an user');
+        const result = await readUserById(+req.params.id);
+        success(res, result);
     } catch (err) {
-        res.status(400).json({
-            status: 'fail',
-            data: {
-                err
-            }
-        });
+        fail(res, err);
         next(err);
     };
 };
 
-export const updateByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const patchUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const result = await updateById(req.params.id, req.body);
-        res.status(201).json({
-            status: 'success',
-            data: {
-                result
-            }
-        });
+        logger.debug('Get http request, patch an user');
+        const result = await updateUserById(+req.params.id, req.body);
+        success(res, result);
     } catch (err) {
-        res.status(400).json({
-            status: 'fail',
-            data: {
-                err
-            }
-        });
+        fail(res, err);
         next(err);
     };
 };
 
-export const deleteByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const result = await deleteById(req.params.id);
-        res.status(201).json({
-            status: 'success',
-            data: {
-                result
-            }
-        });
+        logger.debug('Get http request, delete an user');
+        const result = await deleteUserById(+req.params.id);
+        success(res, result);
     } catch (err) {
-        res.status(400).json({
-            status: 'fail',
-            data: {
-                err
-            }
-        });
+        fail(res, err);
         next(err);
     };
 };
