@@ -1,69 +1,108 @@
-import { User } from "../../entities/user";
-import { Postgres } from "../../services/database/postgres/typeorm";
-import logger from "../../util/logger";
-import { CreateUser } from "./interface";
+import { Request, Response, NextFunction } from "express";
 
-const repository = Postgres.getRepository(User);
+import logger from "../../util/logger";
+import { create, readAll, readById, updateById, deleteById } from "../../models/user";
+
 
 //TODO more easily
 //TODO use Rxjs
 //TODO params
-export const create = async (user: CreateUser): Promise<User> => {
+export const createHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        user.createdTime = new Date();
-        user.updatedTime = new Date();
-        const result = await repository.save(user);
-        return result;
+        const result = await create(req.body);
+        res.status(201).json({
+            status: 'success',
+            data: {
+                result
+            }
+        });
     } catch (err) {
-        throw err;
+        res.status(400).json({
+            status: 'fail',
+            data: {
+                err
+            }
+        });
+        next(err);
     };
 };
 
-export const readAll = async (): Promise<User[]> => {
+export const readAllHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const result = await repository.find();
-        return result;
+        const result = await readAll();
+        res.status(201).json({
+            status: 'success',
+            data: {
+                result
+            }
+        });
     } catch (err) {
-        throw err;
+        res.status(400).json({
+            status: 'fail',
+            data: {
+                err
+            }
+        });
+        next(err);
     };
 };
 
-export const readById = async (id: string): Promise<User> => {
+export const readByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const user = new User();
-        user.id = id;
-        const result = await repository.findOneBy(user);
-        if (!result) {
-            return user;
-        } else {
-            return result;
-        };
+        const result = await readById(req.params.id);
+        res.status(201).json({
+            status: 'success',
+            data: {
+                result
+            }
+        });
     } catch (err) {
-        throw err;
+        res.status(400).json({
+            status: 'fail',
+            data: {
+                err
+            }
+        });
+        next(err);
     };
 };
 
-export const updateById = async (id: string, user: CreateUser) => {
+export const updateByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        user.updatedTime = new Date();
-        const result = await repository.update(id, user);
-        return result;
+        const result = await updateById(req.params.id, req.body);
+        res.status(201).json({
+            status: 'success',
+            data: {
+                result
+            }
+        });
     } catch (err) {
-        throw err;
+        res.status(400).json({
+            status: 'fail',
+            data: {
+                err
+            }
+        });
+        next(err);
     };
 };
 
-export const deleteById = async (id: string) => {
+export const deleteByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const user = new User();
-        user.id = id;
-        const result = await repository.delete(user);
-        if (!result) {
-            return user;
-        } else {
-            return result;
-        };
+        const result = await deleteById(req.params.id);
+        res.status(201).json({
+            status: 'success',
+            data: {
+                result
+            }
+        });
     } catch (err) {
-        throw err;
+        res.status(400).json({
+            status: 'fail',
+            data: {
+                err
+            }
+        });
+        next(err);
     };
 };

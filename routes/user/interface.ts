@@ -1,4 +1,4 @@
-export interface PostUserBody {
+export interface CreateUserBody {
   username: string;
   password: string;
 };
