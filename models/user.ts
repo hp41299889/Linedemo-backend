@@ -29,6 +29,14 @@ export const readUserById = async (id: number): Promise<User | null> => {
     };
 };
 
+export const readUserByUsername = async (username: string): Promise<User | null> => {
+    try {
+        return await repository.findOneBy({ username: username });
+    } catch (err) {
+        throw err;
+    };
+};
+
 export const updateUserById = async (id: number, user: User): Promise<UpdateResult> => {
     try {
         // user.createdTime = user.createdTime;

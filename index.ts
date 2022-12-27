@@ -12,8 +12,9 @@ const logger = loggerFactory('Server');
 
 server.use(express.json())
 server.use(cors());
-server.use('/message', routes.message);
+// server.use('/message', routes.message);
 server.use(routes.user);
+server.use(routes.auth);
 
 const appInit = () => {
   services.postgresInit();
