@@ -20,4 +20,4 @@ export class User {
 
   @UpdateDateColumn()
   updatedTime: Date;
-}
+};

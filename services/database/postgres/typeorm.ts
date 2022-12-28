@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 
-import { User } from '../../../entities/user';
+import { User, LineToken } from '../../../entities';
 import { postgresConfig } from '../../../config';
 import { loggerFactory } from '../../../util/logger';
 
@@ -15,7 +15,7 @@ export const Postgres = new DataSource({
   password: password,
   database: database,
   synchronize: true,
-  entities: [User],
+  entities: [User, LineToken],
   subscribers: [],
   migrations: [],
 });
