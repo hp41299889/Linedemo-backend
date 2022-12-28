@@ -5,7 +5,7 @@ export class User {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column({ unique: true })
+  @Column({ unique: true, type: 'uuid' })
   @Generated("uuid")
   uuid: string;
 
@@ -15,9 +15,9 @@ export class User {
   @Column()
   password: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamp' })
   createdTime: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedTime: Date;
 };
