@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { SessionData } from "express-session";
 
 import { loggerFactory } from "../../util/logger";
 import { success, fail } from "../../util/httpHandler";
@@ -7,9 +8,15 @@ import { readUserByUsername } from "../../models/user";
 
 const logger = loggerFactory('AuthContoller');
 
-export const login = async (req: Request, res: Response, next: NextFunction) => {
+declare module 'express-session' {
+    interface SessionData {
+        userId: string;
+    }
+};
+
+export const signin = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        logger.debug('Get http request, login');
+        logger.debug('Get http request, signin');
         const { body } = req;
         const result = await readUserByUsername(body.username);
         if (!result) {
@@ -17,16 +24,33 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         };
         const password = body.password;
         await checkPassword(password, result.password);
-        success(res, 'login success');
+        req.session.userId = req.sessionID;
+        logger.info(req.session);
+        logger.info(req.sessionID);
+        success(res, 'signin success');
     } catch (err) {
         fail(res, err);
         next(err);
     };
 };
 
-const checkPassword = async (p: string, pa: string) => {
+export const signout = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        if (p != pa) {
+        logger.debug('Get http request, signout');
+        //TODO maybe kill session
+        req.session.destroy();
+        logger.info(req.session);
+        logger.info(req.sessionID);
+        success(res, 'signout success');
+    } catch (err) {
+        fail(res, err);
+        next(err);
+    };
+};
+
+const checkPassword = async (signinPassword: string, userPassword: string) => {
+    try {
+        if (signinPassword != userPassword) {
             throw 'password is not correct';
         };
     } catch (err) {

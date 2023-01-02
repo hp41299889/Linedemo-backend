@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import session from 'express-session';
 
 import { loggerFactory } from './util/logger';
 import { appConfig } from './config';
@@ -12,7 +13,12 @@ const logger = loggerFactory('Server');
 
 server.use(express.json())
 server.use(cors());
-// server.use('/message', routes.message);
+server.use(session({
+  secret: 'linedemo',
+  saveUninitialized: false,
+  resave: true,
+  cookie: { maxAge: 1000 * 60 * 30 }
+}));
 server.use(routes.user);
 server.use(routes.auth);
 
