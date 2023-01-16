@@ -38,7 +38,9 @@ export const signout = async (req: Request, res: Response, next: NextFunction) =
     try {
         logger.debug('Get http request, signout');
         //TODO maybe kill session
-        req.session.destroy();
+        req.session.destroy(() => {
+            logger.info('session destroy')
+        });
         logger.info(req.session);
         logger.info(req.sessionID);
         success(res, 'signout success');

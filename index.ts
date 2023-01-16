@@ -21,6 +21,7 @@ server.use(session({
 }));
 server.use(routes.user);
 server.use(routes.auth);
+server.use(routes.lineToken);
 
 const appInit = () => {
   services.postgresInit();
